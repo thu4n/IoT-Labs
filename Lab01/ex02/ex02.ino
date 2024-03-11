@@ -11,7 +11,7 @@ int potValue = 0;
 
 int speed = 0;
 
-void foo(int x) {
+void onAndOff(int x) {
     digitalWrite(led1, HIGH);
     delay(x);
     digitalWrite(led1, LOW);
@@ -61,13 +61,13 @@ void loop() {
 
   switch (speed) {
     case 1:
-      foo(500);
+      onAndOff(500);
       break;
     case 2:
-      foo(250);
+      onAndOff(250);
       break;
     case 3:
-      foo(100);
+      onAndOff(100);
       break;
   }
 }

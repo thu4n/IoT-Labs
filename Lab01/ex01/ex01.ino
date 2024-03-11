@@ -8,7 +8,6 @@ void setup() {
   for (int i = 0; i < ledCount; i++) {
     pinMode(leds[i], OUTPUT);
   }
-
   pinMode(buttonPin, INPUT);
 }
 
