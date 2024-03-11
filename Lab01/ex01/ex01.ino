@@ -6,7 +6,6 @@ int ledIndex = 0;        // Index của đèn LED hiện tại
 
 void setup() {
   // Khai báo chân làm OUTPUT cho đèn LED
-  Serial.begin(9600);
   for (int i = 0; i < ledCount; i++) {
     pinMode(leds[i], OUTPUT);
   }
@@ -18,7 +17,6 @@ void setup() {
 void loop() {
   // Đọc trạng thái của nút nhấn
   buttonState = digitalRead(buttonPin);
-  Serial.println(buttonState);
 
   // Nếu nút nhấn được nhấn
   if (buttonState == HIGH) {
