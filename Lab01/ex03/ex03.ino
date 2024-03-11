@@ -11,14 +11,20 @@ void setup() {
 void loop() {
   if (digitalRead(buttonPin) == LOW) {
     int randomNumber = random(1, 7);
+
+    // Lần lượt sáng từng đèn
     for (int i = 0; i < 6; i++) {
       digitalWrite(ledPins[i], HIGH);
       delay(100);
     }
+
+    // Sáng lượng đèn bằng với số được random
     for (int i = 0; i < 6; i++) {
       digitalWrite(ledPins[i], (i + 1) <= randomNumber ? HIGH : LOW);
     }
     delay(1000);
+
+    // Bật tắt tất cả đèn led 6 lần
     for (int i = 0; i < 6; i++)
     {
       for (int i = 0; i < 6; i++) {
