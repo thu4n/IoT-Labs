@@ -12,6 +12,28 @@ int potValue = 0;
 // Biến lưu trữ tốc độ sáng đèn
 int speed = 0;
 
+void foo(int x) {
+    digitalWrite(led1, HIGH);
+    delay(x);
+    digitalWrite(led1, LOW);
+    
+    digitalWrite(led2, HIGH);
+    delay(x);
+    digitalWrite(led2, LOW);
+    
+    digitalWrite(led3, HIGH);
+    delay(x);
+    digitalWrite(led3, LOW);
+
+    digitalWrite(led2, HIGH);
+    delay(x);
+    digitalWrite(led2, LOW);
+    
+    digitalWrite(led1, HIGH);
+    delay(x);
+    digitalWrite(led1, LOW);
+}
+
 void setup() {
   // Khởi tạo Serial Monitor
   Serial.begin(9600);
@@ -47,43 +69,13 @@ void loop() {
   // Điều khiển đèn LED
   switch (speed) {
     case 1:
-      digitalWrite(led1, HIGH);
-      delay(500);
-      digitalWrite(led1, LOW);
-      
-      digitalWrite(led2, HIGH);
-      delay(500);
-      digitalWrite(led2, LOW);
-      
-      digitalWrite(led3, HIGH);
-      delay(500);
-      digitalWrite(led3, LOW);
+      foo(500);
       break;
     case 2:
-      digitalWrite(led1, HIGH);
-      delay(250);
-      digitalWrite(led1, LOW);
-      
-      digitalWrite(led2, HIGH);
-      delay(250);
-      digitalWrite(led2, LOW);
-      
-      digitalWrite(led3, HIGH);
-      delay(250);
-      digitalWrite(led3, LOW);
+      foo(250);
       break;
     case 3:
-      digitalWrite(led1, HIGH);
-      delay(100);
-      digitalWrite(led1, LOW);
-      
-      digitalWrite(led2, HIGH);
-      delay(100);
-      digitalWrite(led2, LOW);
-      
-      digitalWrite(led3, HIGH);
-      delay(100);
-      digitalWrite(led3, LOW);
+      foo(100);
       break;
   }
 }
