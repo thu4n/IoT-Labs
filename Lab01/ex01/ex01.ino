@@ -17,13 +17,11 @@ void setup() {
 void loop() {
   // Đọc trạng thái của nút nhấn
   buttonState = digitalRead(buttonPin);
-  Serial.print(buttonState);
-  Serial.print(ledIndex);
 
   // Nếu nút nhấn được nhấn
   if (buttonState == HIGH) {
     // Chờ nút nhấn được thả
-    //while (digitalRead(buttonPin) == HIGH);
+    while (digitalRead(buttonPin) == HIGH);
 
     // Tăng index của đèn LED
     ledIndex++;
