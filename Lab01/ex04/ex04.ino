@@ -16,7 +16,7 @@ unsigned const int red_B = 2;
 unsigned const int yellow_B = 1;
 unsigned const int green_B = 0;
 
-bool turn = 0; // 0: A, 1: B
+bool turn = 0; // 0: B, 1: A
 
 void zero(void) {
   digitalWrite(A, LOW);
@@ -135,17 +135,19 @@ void traffic_light(void) {
                 zero();
                 if (turn == 0) {
                     // Giao lộ B hết lượt, giao lộ A được chạy
-                    turn = 1;
                     digitalWrite(red_A, LOW);
-                    digitalWrite(green_A, HIGH);
                     digitalWrite(yellow_B, LOW);
+                    digitalWrite(green_A, HIGH);
+                    digitalWrite(red_B, HIGH);
+                    turn = 1;
                 }
                 else {
                     // Giao lộ A hết lượt, giao lộ B được chạy
-                    turn = 0;
                     digitalWrite(red_B, LOW);
-                    digitalWrite(green_B, HIGH);
                     digitalWrite(yellow_A, LOW);
+                    digitalWrite(green_B, HIGH);
+                    digitalWrite(red_A, HIGH);
+                    turn = 0;
                 }
                 break;
             case 1:
