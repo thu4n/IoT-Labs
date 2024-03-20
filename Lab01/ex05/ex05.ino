@@ -12,7 +12,7 @@ int correctButton;
 unsigned long startTime = millis();
 
 void setup() {
-  lcd.init();					
+  lcd.begin();					
   lcd.backlight();
   lcd.setCursor(0,0);
   for (int i = 0; i < 10; i++) {
@@ -31,26 +31,19 @@ void loop() {
 }
 
 void playGame() {
-  int ledCount = 1;// random chỗ này
+  int ledCount = random(1,11);// random chỗ này
   correctButton = ledCount % 3;
   flashLEDs(ledCount, ledPins); // Nháy đèn
   Serial.print("Button: ");
   Serial.println(correctButton);
   delay(4000 - (level * 1000));
   checkButtons();
-  if (isTimeOut) {
-    level = 1;
-    score = 0;
-    lcd.clear();
-    lcd.print("Game Over!");
-    delay(2000);
-    lcd.clear();
-  }
   // Hết thời gian, reset cấp độ và điểm số
 }
 
 void checkButtons() {
   // Kiểm tra trạng thái nút bấm và cộng hoặc trừ điểm
+  Serial.println(digitalRead(buttonPins[1]));
   isTimeOut = false;
   if (digitalRead(buttonPins[0]) == HIGH && correctButton == 0) {
     score++;
@@ -67,7 +60,7 @@ void checkButtons() {
     level++;
     setLevel(level);
     displayScore("+1");
-  } else if (millis() - startTime >= 4000 - (level * 1000)) {
+  } else {
     // Trường hợp không chọn nút hoặc chọn sai
     score--;
     if (score == -1) {
@@ -75,9 +68,7 @@ void checkButtons() {
     }
     setLevel(1);
     displayScore("-1");
-  } else {
-    isTimeOut = true;
-  }
+  } 
 }
 
 void flashLEDs(int ledCount,const int ledPins[]) {
