@@ -1,14 +1,14 @@
-const int pirPin = 7;  // Pin connected to the PIR sensor's output
+const int pirPin = 7;
 
 void setup() {
-  Serial.begin(9600);  // Initialize serial communication
-  pinMode(pirPin, INPUT);  // Set PIR sensor pin as input
+  Serial.begin(9600);
+  pinMode(pirPin, INPUT);
 }
 
 void loop() {
-  int sensorValue = digitalRead(pirPin);  // Read sensor value
+  int sensorValue = digitalRead(pirPin);
 
-  if (sensorValue == HIGH) {  // If motion detected
+  if (sensorValue == HIGH) {
     Serial.println("Motion detected!");
   } else {
     Serial.println("No motion detected.");
