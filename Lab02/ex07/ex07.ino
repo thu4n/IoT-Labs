@@ -33,6 +33,7 @@ void loop() {
     if (currentMode > 1) {
       currentMode = 0;
     }
+    Serial.println("Mode: ", currentMode);
     delay(500); // Chống rung nút
   }
   
