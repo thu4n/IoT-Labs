@@ -3,14 +3,17 @@
 
 BH1750 lightSensor;
 
-const int ledPins[] = {2, 3, 4, 5, 6, 7, 8, 9, 10, 11};
-const int buttonPin = 12;
-const int lightThreshold = 200; // Tùy chỉnh ngưỡng ánh sáng
+const int ledPins[] = {4, 5, 6, 7, 8, 9, 10, 11, 12, 13};
+const int buttonPin = 3;
+const int lightThreshold = 1000; // Tùy chỉnh ngưỡng ánh sáng
 
-int currentMode = 0;
-int numLedsOn = 0;
+bool currentMode = 0;
+int numLedsOn = 1;
+int maxLedsOn = 5;
+boolean first = false;
 
 void setup() {
+  Wire.begin();
   Serial.begin(9600);
   
   lightSensor.begin();
@@ -25,33 +28,45 @@ void setup() {
 }
 
 void loop() {
+  Serial.println("==============begin===============");
   int lightValue = lightSensor.readLightLevel();
-  
+
   // Xác định chế độ đèn
-  if (digitalRead(buttonPin) == LOW) {
-    currentMode++;
-    if (currentMode > 1) {
-      currentMode = 0;
+  delay(500);
+  if (digitalRead(buttonPin) == LOW && first == false) {
+    currentMode = 0;
+    Serial.println("1st pressed");
+    first = true;
+    delay(500);
+    if (digitalRead(buttonPin) == LOW && first == true) {
+      currentMode = 1;
+      Serial.println("2nd pressed");
+      first = false;
     }
-    Serial.println("Mode: ", currentMode);
-    delay(500); // Chống rung nút
   }
+
+  Serial.println(currentMode);
+  first = false;
+  maxLedsOn = map(lightValue, 0, 1000, 0, 10);
   
   // Điều chỉnh số lượng đèn LED
   switch (currentMode) {
     case 0: // Chế độ 5 đèn
-        numLedsOn = map(lightValue, lightThreshold, 65535, 0, 10);
-        if(numLedsOn > 5){
-            numLedsOn = 5;
+        if(maxLedsOn > 5){
+          maxLedsOn = 5;
         }
+        numLedsOn = 5 - maxLedsOn;
       break;
     case 1: // Chế độ 10 đèn
-      numLedsOn = map(lightValue, lightThreshold, 65535, 0, 10);
-        if(numLedsOn > 10){
-            numLedsOn = 10;
+        if(maxLedsOn > 10){
+            maxLedsOn = 10;
         }
+        numLedsOn = 10 - maxLedsOn;
       break;
   }
+
+  Serial.println(numLedsOn);
+  Serial.println(maxLedsOn);
   
   // Bật/tắt đèn LED
   for (int i = 0; i < 10; i++) {
@@ -61,4 +76,6 @@ void loop() {
       digitalWrite(ledPins[i], LOW);
     }
   }
+  Serial.println("====================");
+}
   
