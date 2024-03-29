@@ -1,6 +1,5 @@
 
-// Kịch bản: giao lộ B bên trái, giao lộ A bên phải
-// Khai báo các chân led 7 đoạn
+
 unsigned const int A = 11;
 unsigned const int B = 10;
 unsigned const int C = 7;
@@ -155,34 +154,34 @@ void loop() {
   distance = duration * 0.034 / 2;
   delay(200);
   Serial.println(distance);
-  if (distance >= 326 || distance < 0) {
+  if (distance > 180 ) {
     zero();
   }
-  else if (distance < 36) {
-    one();
+  else if (distance <= 20) {
+    nine();
   }
-  else if (distance < 72) {
-    two();
-  }
-  else if (distance < 108) {
-    three();
-  }
-  else if (distance < 144) {
-    four();
-  }
-  else if (distance < 180) {
-    five();
-  }
-  else if (distance < 216) {
-    six();
-  }
-  else if (distance < 252) {
-    seven();
-  }
-  else if (distance < 288) {
+  else if (distance <= 40) {
     eight();
   }
-  else if (distance < 326) {
-    nine();
+  else if (distance <= 60) {
+    seven();
+  }
+  else if (distance <= 80) {
+    six();
+  }
+  else if (distance <= 100) {
+    five();
+  }
+  else if (distance <= 120) {
+    four();
+  }
+  else if (distance <= 140) {
+    three();
+  }
+  else if (distance <= 160) {
+    two();
+  }
+  else if (distance <= 180) {
+    one();
   }
 }
