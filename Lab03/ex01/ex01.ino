@@ -56,7 +56,7 @@ const char Gameover_page[] PROGMEM = R"=====(
 const char* ssid = "UiTiOt-E3.1";
 const char* password = "UiTiOtAP";
 
-int ledNum;
+int ledNum = 0;
 int score = 0;
 
 // Web server object
@@ -71,19 +71,46 @@ void handleRoot() {
 }
 
 void handleB1() {
-  Serial.println("You press Button 1");
+  Serial.println("You press Button 1: ");
+  if (ledNum % 3 == 0)
+  {
+    Serial.print("Correct");
+    score++;
+  } else {
+    Serial.print("Incorrect");
+    score--;
+  }
+  Serial.println("");
   String html = MAIN_page;
   server.send(200, "text/html", html);
 }
 
 void handleB2() {
-  Serial.println("You press Button 2");
+  Serial.println("You press Button 2: ");
+  if (ledNum % 3 == 1)
+  {
+    Serial.print("Correct");
+    score++;
+  } else {
+    Serial.print("Incorrect");
+    score--;
+  }
+  Serial.println("");
   String html = MAIN_page;
   server.send(200, "text/html", html);
 }
 
 void handleB3() {
-  Serial.println("You press Button 3");
+  Serial.println("You press Button 3: ");
+  if (ledNum % 3 == 2)
+  {
+    Serial.print("Correct");
+    score++;
+  } else {
+    Serial.print("Incorrect");
+    score--;
+  }
+  Serial.println("");
   String html = MAIN_page;
   server.send(200, "text/html", html);
 }
@@ -186,19 +213,6 @@ void randomSeed(int numled, int seed) {
     {
       digitalWrite(ledPins[seed5[i]], LOW);
     }
-    break;
-  }
-}
-
-void getCase() {
-  int cs = ledNum % 3;
-  switch (cs)
-  {
-  case 0:
-    break;
-  case 1:
-    break;
-  case 2:
     break;
   }
 }
