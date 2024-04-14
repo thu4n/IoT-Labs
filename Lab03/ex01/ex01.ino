@@ -13,9 +13,9 @@ const char MAIN_page[] PROGMEM = R"=====(
             document.getElementById('score').innerHTML = 'Score: ' + score;
         }
 
-        function incrementScore() {
+        function checkB1() {
             var xhr = new XMLHttpRequest();
-            xhr.open('GET', '/increment-score', true);
+            xhr.open('GET', '/b1', true);
             xhr.onreadystatechange = function() {
                 if (xhr.readyState == 4 && xhr.status == 200) {
                     updateScore(xhr.responseText);
@@ -23,29 +23,52 @@ const char MAIN_page[] PROGMEM = R"=====(
             };
             xhr.send();
         }
+
+        function checkB2() {
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', '/b2', true);
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    updateScore(xhr.responseText);
+                }
+            };
+            xhr.send();
+        }
+
+        function checkB3() {
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', '/b3', true);
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    updateScore(xhr.responseText);
+                }
+            };
+            xhr.send();
+        }
+
+        function checkTime() {
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', '/time', true);
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    updateScore(xhr.responseText);
+                }
+            };
+            xhr.send();
+        }
+
+        setInterval(checkTime, 2000);
     </script>
 </head>
 <body>
     <h1></h1>
     <h1 id='score'>Score: 0</h1>
-    <a href="/b1"><button>Button 1</button></a><br>
-    <a href="/b2"><button>Button 2</button></a><br>
-    <a href="/b3"><button>Button 3</button></a><br>
+    <button onclick='checkB1()'>Button 1</button>
+    <button onclick='checkB2()'>Button 2</button>
+    <button onclick='checkB3()'>Button 3</button>
 </body>
 </html>
 
-)=====";
-
-const char Gameover_page[] PROGMEM = R"=====(
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Guest the num</title>
-</head>
-<body>
-    <h1>Game over!</h1>
-    <a href="/"><button>Try again!</button></a><br>
-</body>
 )=====";
 
 // LED pin (built-in LED by default)
@@ -53,15 +76,55 @@ const char Gameover_page[] PROGMEM = R"=====(
 #define DELAY_LED 200
 
 // WiFi credentials (replace with your network details)
-const char* ssid = "UiTiOt-E3.1";
-const char* password = "UiTiOtAP";
+const char* ssid = "";
+const char* password = "";
 
 int ledNum = 0;
 int score = 0;
+int start = 0;
+bool isClicked = false;
 
 // Web server object
 ESP8266WebServer server(80);
 const int ledPins[] = {D3, D4, D5, D6, D7};
+
+void setup() {
+  Serial.begin(115200);
+  srand(time(NULL));
+  WiFi.begin(ssid, password);
+  Serial.println("");
+
+  for (int i = 0; i < 5; i++)
+  {
+    pinMode(ledPins[i], OUTPUT);
+  }
+
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(500);
+    Serial.print(".");
+  }
+
+  startLed();
+  Serial.println("");
+  Serial.print("Connected to ");
+  Serial.println(ssid);
+  Serial.print("IP address: ");
+  Serial.println(WiFi.localIP());
+  server.on("/", handleRoot);
+  server.on("/b1", HTTP_GET, handleB1);
+  server.on("/b2", HTTP_GET, handleB2);
+  server.on("/b3", HTTP_GET, handleB3);
+  server.on("/time", HTTP_GET, handleTime);
+  server.begin();
+  Serial.println("HTTP server started");
+}
+
+// Loop function
+void loop() {
+  isClicked = false;
+  server.handleClient();
+  randomLED();
+}
 
 // Webpage handlers
 void handleRoot() {
@@ -71,6 +134,7 @@ void handleRoot() {
 }
 
 void handleB1() {
+  isClicked = true;
   Serial.println("You press Button 1: ");
   if (ledNum % 3 == 0)
   {
@@ -82,10 +146,11 @@ void handleB1() {
   }
   Serial.println("");
   String html = MAIN_page;
-  server.send(200, "text/html", html);
+  server.send(200, "text/html", String(score));
 }
 
 void handleB2() {
+  isClicked = true;
   Serial.println("You press Button 2: ");
   if (ledNum % 3 == 1)
   {
@@ -96,11 +161,11 @@ void handleB2() {
     score--;
   }
   Serial.println("");
-  String html = MAIN_page;
-  server.send(200, "text/html", html);
+  server.send(200, "text/html", String(score));
 }
 
 void handleB3() {
+  isClicked = true;
   Serial.println("You press Button 3: ");
   if (ledNum % 3 == 2)
   {
@@ -112,13 +177,16 @@ void handleB3() {
   }
   Serial.println("");
   String html = MAIN_page;
-  server.send(200, "text/html", html);
+  server.send(200, "text/html", String(score));
 }
 
-void handleGameover() {
-  Serial.println("Game over");
-  String html = Gameover_page;
-  server.send(200, "text/html", html);
+void handleTime() {
+  Serial.println("Time out");
+  if (!isClicked)
+  {
+    score--;
+  }
+  server.send(200, "text/html", String(score));
 }
 
 void startLed() {
@@ -146,6 +214,10 @@ void startLed() {
 
 void randomLED() {
   ledNum = random(1, 6);
+  Serial.println("Right button: ");
+  Serial.print(ledNum % 3 + 1);
+  Serial.println("");
+  start = millis();
   int seed = random(1, 6);
   randomSeed(ledNum, seed);
 }
@@ -215,42 +287,4 @@ void randomSeed(int numled, int seed) {
     }
     break;
   }
-}
-
-// Setup function
-void setup() {
-  Serial.begin(115200);
-  srand(time(NULL));
-  WiFi.begin(ssid, password);
-  Serial.println("");
-
-  for (int i = 0; i < 5; i++)
-  {
-    pinMode(ledPins[i], OUTPUT);
-  }
-
-  while (WiFi.status() != WL_CONNECTED) {
-    delay(500);
-    Serial.print(".");
-  }
-
-  startLed();
-  Serial.println("");
-  Serial.print("Connected to ");
-  Serial.println(ssid);
-  Serial.print("IP address: ");
-  Serial.println(WiFi.localIP());
-  server.on("/", handleRoot);
-  server.on("/b1", handleB1);
-  server.on("/b2", handleB2);
-  server.on("/b3", handleB3);
-  server.on("/over", handleGameover);
-  server.begin();
-  Serial.println("HTTP server started");
-}
-
-// Loop function
-void loop() {
-  server.handleClient();
-  randomLED();
 }
