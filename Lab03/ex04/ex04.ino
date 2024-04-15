@@ -1,11 +1,11 @@
 #include <ESP8266WiFi.h>
 #include <PubSubClient.h>
 
-const char* ssid = "UiTiOt-E3.1";
-const char* password = "UiTiOtAP";
-const char* mqtt_server = "192.168.120.88";
-const char* mqtt_user = "mmcl21-2";
-const char* mqtt_password = "mmcl21-2@123";
+const char* ssid = "TheCupsCoffee";
+const char* password = "TheCups2022";
+const char* mqtt_server = "e80eae609796448aad6807bec5454d58.s1.eu.hivemq.cloud";
+const char* mqtt_user = "wemos";
+const char* mqtt_password = "Wemos123";
 const char* mqtt_topic = "cl21/2/nhom1/led";
 
 const int ledPin = D1;
