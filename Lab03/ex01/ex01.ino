@@ -9,63 +9,44 @@ const char MAIN_page[] PROGMEM = R"=====(
 <head>
     <title>Guest the num</title>
     <script>
+        let isClicked = false;
+        let scr = 0;
+
         function updateScore(score) {
             document.getElementById('score').innerHTML = 'Score: ' + score;
         }
 
-        function checkB1() {
-            var xhr = new XMLHttpRequest();
-            xhr.open('GET', '/b1', true);
-            xhr.onreadystatechange = function() {
-                if (xhr.readyState == 4 && xhr.status == 200) {
-                    updateScore(xhr.responseText);
-                }
-            };
-            xhr.send();
-        }
-
-        function checkB2() {
-            var xhr = new XMLHttpRequest();
-            xhr.open('GET', '/b2', true);
-            xhr.onreadystatechange = function() {
-                if (xhr.readyState == 4 && xhr.status == 200) {
-                    updateScore(xhr.responseText);
-                }
-            };
-            xhr.send();
-        }
-
-        function checkB3() {
-            var xhr = new XMLHttpRequest();
-            xhr.open('GET', '/b3', true);
-            xhr.onreadystatechange = function() {
-                if (xhr.readyState == 4 && xhr.status == 200) {
-                    updateScore(xhr.responseText);
-                }
-            };
-            xhr.send();
+        function handleButtonClick(buttonId) {
+          var xhr = new XMLHttpRequest();
+          var url = "/" + buttonId; // Construct URL dynamically based on buttonId
+          xhr.open('GET', url, true);
+          xhr.onreadystatechange = function() {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+              isClicked = true;
+              scr = scr + parseInt(xhr.responseText);
+              updateScore(scr);
+            }
+          };
+          xhr.send();
         }
 
         function checkTime() {
-            var xhr = new XMLHttpRequest();
-            xhr.open('GET', '/time', true);
-            xhr.onreadystatechange = function() {
-                if (xhr.readyState == 4 && xhr.status == 200) {
-                    updateScore(xhr.responseText);
-                }
-            };
-            xhr.send();
+          if (!isClicked) {
+            scr--;
+          }
+          updateScore(scr);
+          isClicked = false;
         }
 
-        setInterval(checkTime, 2000);
+        setInterval(checkTime, 3000);
     </script>
 </head>
 <body>
     <h1></h1>
-    <h1 id='score'>Score: 0</h1>
-    <button onclick='checkB1()'>Button 1</button>
-    <button onclick='checkB2()'>Button 2</button>
-    <button onclick='checkB3()'>Button 3</button>
+    <h1 id='score'>Score: --</h1>
+    <button onclick='handleButtonClick(1)'>Button 1</button>
+    <button onclick='handleButtonClick(2)'>Button 2</button>
+    <button onclick='handleButtonClick(3)'>Button 3</button>
 </body>
 </html>
 
@@ -80,9 +61,6 @@ const char* ssid = "";
 const char* password = "";
 
 int ledNum = 0;
-int score = 0;
-int start = 0;
-bool isClicked = false;
 
 // Web server object
 ESP8266WebServer server(80);
@@ -111,19 +89,31 @@ void setup() {
   Serial.print("IP address: ");
   Serial.println(WiFi.localIP());
   server.on("/", handleRoot);
-  server.on("/b1", HTTP_GET, handleB1);
-  server.on("/b2", HTTP_GET, handleB2);
-  server.on("/b3", HTTP_GET, handleB3);
-  server.on("/time", HTTP_GET, handleTime);
+  server.on("/1", HTTP_GET, handleB1);
+  server.on("/2", HTTP_GET, handleB2);
+  server.on("/3", HTTP_GET, handleB3);
   server.begin();
   Serial.println("HTTP server started");
 }
 
 // Loop function
 void loop() {
-  isClicked = false;
   server.handleClient();
   randomLED();
+}
+
+void checkNum(int num) {
+  int score = 0;
+  if (ledNum % 3 == num)
+  {
+    Serial.print("Correct");
+    score++;
+  } else {
+    Serial.print("Incorrect");
+    score--;
+  }
+  Serial.println("");
+  server.send(200, "text/html", String(score));
 }
 
 // Webpage handlers
@@ -134,59 +124,18 @@ void handleRoot() {
 }
 
 void handleB1() {
-  isClicked = true;
   Serial.println("You press Button 1: ");
-  if (ledNum % 3 == 0)
-  {
-    Serial.print("Correct");
-    score++;
-  } else {
-    Serial.print("Incorrect");
-    score--;
-  }
-  Serial.println("");
-  String html = MAIN_page;
-  server.send(200, "text/html", String(score));
+  checkNum(0);
 }
 
 void handleB2() {
-  isClicked = true;
   Serial.println("You press Button 2: ");
-  if (ledNum % 3 == 1)
-  {
-    Serial.print("Correct");
-    score++;
-  } else {
-    Serial.print("Incorrect");
-    score--;
-  }
-  Serial.println("");
-  server.send(200, "text/html", String(score));
+  checkNum(1);
 }
 
 void handleB3() {
-  isClicked = true;
   Serial.println("You press Button 3: ");
-  if (ledNum % 3 == 2)
-  {
-    Serial.print("Correct");
-    score++;
-  } else {
-    Serial.print("Incorrect");
-    score--;
-  }
-  Serial.println("");
-  String html = MAIN_page;
-  server.send(200, "text/html", String(score));
-}
-
-void handleTime() {
-  Serial.println("Time out");
-  if (!isClicked)
-  {
-    score--;
-  }
-  server.send(200, "text/html", String(score));
+  checkNum(2);
 }
 
 void startLed() {
@@ -213,11 +162,8 @@ void startLed() {
 }
 
 void randomLED() {
-  ledNum = random(1, 6);
-  Serial.println("Right button: ");
-  Serial.print(ledNum % 3 + 1);
-  Serial.println("");
-  start = millis();
+  // ledNum = random(1, 6);
+  ledNum = 3;
   int seed = random(1, 6);
   randomSeed(ledNum, seed);
 }
