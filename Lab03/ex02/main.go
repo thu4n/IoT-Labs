@@ -82,7 +82,7 @@ func postSensorData(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// check distance senor value
-	if sensorData.Data.Distance > 800 {
+	if sensorData.Data.Distance > 6 {
 		lightsOn = 0
 	}
 
