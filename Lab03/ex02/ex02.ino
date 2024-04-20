@@ -52,9 +52,7 @@ void setup() {
 }
 
 void loop() {
-  //Send an HTTP POST request every 10 minutes
   if ((millis() - lastTime) > timerDelay) {
-    //Check WiFi connection status
     if(WiFi.status()== WL_CONNECTED){
       WiFiClient client;
       HTTPClient http;
@@ -62,7 +60,6 @@ void loop() {
       readDistance();
       readLight();
 
-      // Your Domain name with URL path or IP address with path
       http.begin(client, serverName);
       http.addHeader("Content-Type", "application/json");
       String jsonData = "{\"error\":false,\"message\":\"\",\"data\":{\"distance\":" + String(distance) + ",\"light\":" + String(light) + "}}";
