@@ -37,7 +37,9 @@ namespace mqtt_client
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-         
+            brokerTB.Text = broker;
+            subscribeTB.Text = valueTopic;
+            publishTB.Text = detectTopic;
         }
 
         private async void connectBtn_Click(object sender, EventArgs e)
@@ -60,9 +62,6 @@ namespace mqtt_client
 
             await ConnectToBroker();
 
-            broker = brokerTB.Text;
-            valueTopic = subscribeTB.Text;
-            detectTopic = publishTB.Text;
 
             await Subscribe();
         }
@@ -82,6 +81,7 @@ namespace mqtt_client
                 // received messages get lost.
                 mqttClient.ApplicationMessageReceivedAsync += e =>
                 {
+                    Console.WriteLine("ok");
                     Console.WriteLine($"Received message on topic '{e.ApplicationMessage.Topic}': {Encoding.UTF8.GetString(e.ApplicationMessage.Payload)}");
                     return Task.CompletedTask;
                 };

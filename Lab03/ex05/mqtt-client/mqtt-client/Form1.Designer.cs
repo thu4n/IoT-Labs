@@ -107,6 +107,7 @@
             this.subRcvTB.Multiline = true;
             this.subRcvTB.Name = "subRcvTB";
             this.subRcvTB.ReadOnly = true;
+            this.subRcvTB.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.subRcvTB.Size = new System.Drawing.Size(322, 226);
             this.subRcvTB.TabIndex = 7;
             // 
@@ -117,6 +118,7 @@
             this.pubNotiTB.Multiline = true;
             this.pubNotiTB.Name = "pubNotiTB";
             this.pubNotiTB.ReadOnly = true;
+            this.pubNotiTB.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.pubNotiTB.Size = new System.Drawing.Size(322, 226);
             this.pubNotiTB.TabIndex = 8;
             // 
