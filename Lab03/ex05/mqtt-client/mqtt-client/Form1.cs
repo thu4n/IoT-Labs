@@ -21,8 +21,8 @@ namespace mqtt_client
     {
         private IMqttClient mqttClient;
         private string broker = "broker.hivemq.com";
-        private string valueTopic = "cl21/2/nhom2/dht/value";
-        private string detectTopic = "cl21/2/nhom2/dht/detected";
+        private string valueTopic = "cl21/2/nhom1/dht/value";
+        private string detectTopic = "cl21/2/nhom1/dht/detected";
 
         public class SensorData
         {

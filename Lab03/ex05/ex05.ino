@@ -13,8 +13,8 @@ DHT22 dht22(pinDATA);
 const char* ssid = "UIT Public";
 const char* password = "";
 const char* mqtt_server = "broker.hivemq.com";
-const char* topicVALUE = "cl21/2/nhom2/dht/value";
-const char* topicDETECTED = "cl21/2/nhom2/dht/detected";
+const char* topicVALUE = "cl21/2/nhom1/dht/value";
+const char* topicDETECTED = "cl21/2/nhom1/dht/detected";
 
 WiFiClient espClient;
 PubSubClient client(espClient);

@@ -10,7 +10,7 @@ const int ledPin = D3;  // Chân kết nối đến đèn LED
 WiFiClient espClient;
 PubSubClient client(espClient);
 
-const char* topicToSubscribe = "cl21/nhom2/led";
+const char* topicToSubscribe = "cl21/2/nhom1/led";
 
 void setup_wifi() {
   delay(10);
