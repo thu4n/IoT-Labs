@@ -38,7 +38,7 @@ const char MAIN_page[] PROGMEM = R"=====(
           isClicked = false;
         }
 
-        setInterval(checkTime, 3000);
+        setInterval(checkTime, 2000);
     </script>
 </head>
 <body>
@@ -162,8 +162,7 @@ void startLed() {
 }
 
 void randomLED() {
-  // ledNum = random(1, 6);
-  ledNum = 3;
+  ledNum = random(1, 6);
   int seed = random(1, 6);
   randomSeed(ledNum, seed);
 }
