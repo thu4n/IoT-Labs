@@ -1,14 +1,14 @@
 #include <ESP8266WiFi.h>
 #include <ESP8266HTTPClient.h>
 #include <PubSubClient.h>
-#include <DHT22.h>
+#include <DHT11.h>
 #include <ArduinoJson.h>
 
 //define pin data
-#define pinDATA D4
+#define pinDATA <PIN-DATA>
 #define LED_PIN D3
 
-DHT22 dht22(pinDATA); 
+DHT11 dht11(pinDATA); 
 
 const char* ssid = "UIT Public";
 const char* password = "";
@@ -85,9 +85,8 @@ void reconnect() {
   }
 }
 
-void readDHT22() {
-  temp = dht22.getTemperature();
-  hum = dht22.getHumidity();
+void readDHT11() {
+    //Read humid and temp
 }
 
 void blinkLed() {
@@ -118,7 +117,7 @@ void loop() {
     reconnect();
   }
 
-  readDHT22();
+  readDHT11();
   JsonDocument doc;
   doc["temperature"] = String(temp);
   doc["humidity"] = String(hum);
