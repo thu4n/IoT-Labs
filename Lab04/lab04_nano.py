@@ -17,4 +17,5 @@ while True:
     # get is a blocking call that awaits delivery status 
     success = result.get() = TBPublishInfo.TB_ERR_SUCCESS 
     # Disconnect from ThingsBoard
-    client.disconnect() time.sleep(1)
+    client.disconnect() 
+    time.sleep(1)
