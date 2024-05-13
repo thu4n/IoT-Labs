@@ -7,7 +7,7 @@ const char* ssid = "Daivjppro";
 const char* password = "123456780";
 const char* mqtt_server = "mqtt.thingsboard.cloud";
 const char* topic = "v1/devices/me/telemetry";
-const String username = "1n2DNxT7sDDA0ycBziSe";
+const String username = "wFf6AJxzKT8QaVOVILKE";
 
 // Khai báo biến toàn cục cho địa chỉ của cảm biến BH1750
 uint8_t bh1750Address = 0x23;
