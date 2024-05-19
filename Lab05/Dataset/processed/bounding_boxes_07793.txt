@@ -1,0 +1,25 @@
+Dataset/processed\vantoan\download.png 64 19 147 116
+Dataset/processed\vantoan\OIP.png 80 27 164 123
+Dataset/processed\vantoan\download (1).png 94 13 162 100
+Dataset/processed\vantoan\OIP (1).png 71 0 149 96
+Dataset/processed\anhthuan\uit.png 616 121 1149 828
+Dataset/processed\anhthuan\Layer 1.png 184 37 325 214
+Dataset/processed\anhthuan\thuanDalatCircle.png 540 154 743 417
+Dataset/processed\anhthuan\thuan3x4.png 535 144 894 628
+Dataset/processed\anhthuan\thuanDalat2.png 468 272 644 489
+Dataset/processed\anhthuan\anhThe.png 161 116 436 481
+Dataset/processed\anhthuan\thu4n.png 155 72 292 242
+Dataset/processed\anhthuan\thu4n_asiin.png 756 429 1397 1287
+Dataset/processed\vanhau\OIP.png 69 22 164 135
+Dataset/processed\vanhau\OIP (1).png 69 17 158 125
+Dataset/processed\vanhau\OIP (2).png 93 77 158 156
+Dataset/processed\vanhau\download (2).png 67 9 132 85
+Dataset/processed\vinhdai\Dai4.png 420 181 540 337
+Dataset/processed\vinhdai\Dai3.png 118 26 254 179
+Dataset/processed\vinhdai\Dai1.png 642 649 1786 2157
+Dataset/processed\vinhdai\Dai2.png 319 265 398 357
+Dataset/processed\quangvu\WIN_20240518_08_40_31_Pro.png 410 124 764 558
+Dataset/processed\quangvu\WIN_20240518_08_40_40_Pro.png 439 86 784 470
+Dataset/processed\quangvu\WIN_20240518_08_40_35_Pro.png 472 240 858 689
+Dataset/processed\quangvu\01.png 455 112 821 564
+Dataset/processed\quangvu\WIN_20240518_08_40_27_Pro.png 535 119 906 559

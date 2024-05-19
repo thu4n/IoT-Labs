@@ -1,0 +1,6 @@
+Dataset/test-processed\vinhdai\Dai2.png 319 265 398 357
+Dataset/test-processed\quangvu\vu1.png 219 63 447 357
+Dataset/test-processed\quangvu\vu2.png 40 11 116 99
+Dataset/test-processed\vantoan\download (1).png 94 13 162 100
+Dataset/test-processed\anhthuan\thuan.png 332 106 640 487
+Dataset/test-processed\vanhau\download (2).png 67 9 132 85
