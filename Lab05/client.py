@@ -8,7 +8,7 @@ def encode_image_to_base64(image_path):
         encoded_image = base64.b64encode(image_file.read()).decode('utf-8')
     return encoded_image
 
-url = 'http://127.0.0.1:8000/recog'
+url = '172.31.11.66'
 
 image_path = 'Dataset/test/anhthuan/thuan2.jpg'
 encoded_image_data = encode_image_to_base64(image_path)
